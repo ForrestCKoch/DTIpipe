@@ -1,7 +1,12 @@
 #!/bin/sh
 
-EXTRAS="$(pwd)/../../DTIpipe"
-SUBDIR="$(pwd)"
+# A little hack to make sure paths are as we expect
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+HOME="$(readlink -f $SCRIPT_DIR/../..)"
+
+SUBJECT_DIR="$(pwd)"
+BVECS="$HOME/resources/bvecs"
+BVALS="$HOME/resources/bvals"
 
 cd workdir
 BASE="$(pwd)"
@@ -11,13 +16,13 @@ mkdir -p tensor_metrics
 mkdir -p QC
 
 # We'll need to create the mif files first
-mrconvert -fslgrad "$EXTRAS/bvecs" "$EXTRAS/bvals" \
+mrconvert -fslgrad "$BVECS" "$BVALS" \
     $BASE/dti_undistorted.nii.gz dwi.mif 
 
 # generate a mean b0 for visualization
 dwiextract dwi.mif - -bzero | mrmath - mean QC/meanb0.mif -axis 3
 
-mrconvert $SUBDIR/workdir/t1_coregistered.nii.gz t1.mif
+mrconvert $SUBJECT_DIR/workdir/t1_coregistered.nii.gz t1.mif
 
 ###############################################################################
 # create mask and tensor metrics
@@ -110,7 +115,7 @@ tcksift 1M_act_dynamic_seed.tck wm_fod.mif 100k_sift.tck -act 5tt.mif -term_numb
 #tckglobal dwi.mif wm_rf.txt -riso csf_rf.txt -riso gm_rf.txt -mask mask.mif \
 #    -niter 1e9 -fod fod.mif -fiso fiso.mif global_tracks.tck
 
-cd $SUBDIR
+cd $SUBJECT_DIR
 
 
 ###############################################################################

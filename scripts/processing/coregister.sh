@@ -19,7 +19,7 @@ fast -o fast t1_brain
 fslmaths fast_pve_2 -thr 0.7 -bin wmseg
 
 # create a mean of the undistorted data for registration
-fslmaths $SUBJECT_DIR/workdir/b0_undistorted -Tmean b0_mean
+fslmaths $SUBJECT_DIR/workdir/distortion_correction/eddy_corrected_b0 -Tmean b0_mean
 
 # brain extract the b0
 bet b0_mean b0_mean_brain -f 0.2
@@ -33,6 +33,6 @@ convert_xfm -omat t1_to_b0.mat -inverse b0_to_t1.mat
 
 flirt -ref b0_mean -in $SUBJECT_DIR/t1 -applyxfm -init t1_to_b0.mat -out t1_coregistered
 
-cp t1_coregistered.nii.gz ../
+#cp t1_coregistered.nii.gz ../
 
 cd $SUBJECT_DIR

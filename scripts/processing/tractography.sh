@@ -22,7 +22,7 @@ mrconvert -fslgrad "$BVECS" "$BVALS" \
 # generate a mean b0 for visualization
 dwiextract dwi.mif - -bzero | mrmath - mean QC/meanb0.mif -axis 3
 
-mrconvert $SUBJECT_DIR/workdir/t1_coregistered.nii.gz t1.mif
+mrconvert $SUBJECT_DIR/workdir/coregistration/t1_coregistered.nii.gz t1.mif
 
 ###############################################################################
 # create mask and tensor metrics

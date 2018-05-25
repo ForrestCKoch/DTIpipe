@@ -4,7 +4,7 @@ SUBJECT_DIR="$(pwd)"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 HOME="$(readlink -f $DIR/../..)"
 
-BVALS="$HOME/bvals"
+BVALS="$HOME/resources/bvals"
 BVECS="$SUBJECT_DIR/workdir/distortion_correction/bvecs_ec"
 
 cp $SUBJECT_DIR/workdir/coregistration/b0_mean_brain_mask.nii.gz brain_mask.nii.gz

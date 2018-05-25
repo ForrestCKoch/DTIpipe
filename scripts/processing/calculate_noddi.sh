@@ -21,6 +21,10 @@ for i in *.nii.gz; do gunzip -f -d $i; done
 
 export TZ='Australia/Sydney'
 
-matlab -nosplash -nojvm -nodesktop -r "run $DIR/calculate_noddi.m" < /dev/null
+cp $DIR/calculate_noddi.m .
+
+matlab -nosplash -nojvm -nodesktop -r "calculate_noddi" < /dev/null
+
+rm calculate_noddi.m
 
 cd $SUBJECT_DIR

@@ -79,7 +79,7 @@ mrconvert dti_denoised.mif dti_denoised.nii
 mrcalc dti.mif dti_denoised.mif -subtract res.mif
 
 # generate a mask from b0's
-fslmaths unwarped_b0 -Tmean mean
+fslmaths b0_undistorted -Tmean mean
 bet mean mean -m -n -f 0.2
 
 for i in $(seq 1 $(fslval dti_trimmed dim4)); do

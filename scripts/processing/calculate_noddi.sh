@@ -7,6 +7,10 @@ HOME="$(readlink -f $DIR/../..)"
 BVALS="$HOME/resources/bvals"
 BVECS="$SUBJECT_DIR/workdir/distortion_correction/bvecs_ec"
 
+cd workdir
+mkdir -p noddi_calculation
+cd noddi_calculation
+
 cp $SUBJECT_DIR/workdir/coregistration/b0_mean_brain_mask.nii.gz brain_mask.nii.gz
 cp $BVALS bvals
 cp $BVECS bvecs

@@ -82,7 +82,7 @@ mrcalc dti.mif dti_denoised.mif -subtract res.mif
 fslmaths b0_undistorted -Tmean mean
 bet mean mean -m -n -f 0.2
 
-for i in $(seq 1 $(fslval dti_trimmed dim4)); do
+for i in $(seq 1 $(fslval dti_denoised dim4)); do
     echo -n '1 '
 done > index.txt
 

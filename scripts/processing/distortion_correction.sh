@@ -6,8 +6,8 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 HOME="$(readlink -f $SCRIPT_DIR/../..)"
 
 SUBJECT_DIR=$(pwd)
-BVALS="$HOME/bvals"
-BVECS="$HOME/bvecs"
+BVALS="$HOME/resources/bvals"
+BVECS="$HOME/resources/bvecs"
 
 mkdir -p workdir
 cd workdir

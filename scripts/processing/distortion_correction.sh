@@ -39,16 +39,11 @@ else
     cp $SUBJECT_DIR/blip.nii blip_even.nii
 fi
 
+
 # need to extract the b0 images from the dti
 # in our data they are 0,20,40,60,80,100,120,&140
 echo "extracting b0 components..."
-
-# we should replace this with a function to find them automatically
-splitTargets="split0000 split0020 split0040 split0060 split0080 split0100 split0120 split0140"
-
-fslsplit dti_even split -t
-fslmerge -t dti_b0 $splitTargets
-rm split*
+dwiextract -bzero -fslgrad $BVECS $BVALS dti_even.nii* dti_b0.nii
 
 fslroi blip_even blip_b0 0 1
 
@@ -95,15 +90,7 @@ cp eddy_corrected.eddy_rotated_bvecs bvecs_ec
 # in our data they are 0,20,40,60,80,100,120,&140
 echo "extracting eddy corrected b0 components..."
 
-# we should replace this with a function to find them automatically
-splitTargets="split0000 split0020 split0040 split0060 split0080 split0100 split0120 split0140"
-
-fslsplit eddy_corrected split -t
-fslmerge -t eddy_corrected_b0 $splitTargets
-rm split*
-
-#cp eddy_corrected.nii.gz ../dti_undistorted.nii.gz
-#cp unwarped_b0.nii.gz ../b0_undistorted.nii.gz
+dwiextract -bzero -fslgrad $BVECS $BVALS eddy_corrected eddy_corrected_b0
 
 cd $SUBJECT_DIR
 

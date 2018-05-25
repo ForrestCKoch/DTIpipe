@@ -2,9 +2,9 @@
 
 SUBJECT_DIR="$(pwd)"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-BASE="$(readlink -f $DIR/../..)"
+HOME="$(readlink -f $DIR/../..)"
 
-BVALS="$BASE/resources/bvals"
+BVALS="$HOME/resources/bvals"
 BVECS="$SUBJECT_DIR/workdir/distortion_correction/bvecs_ec"
 
 cd workdir

@@ -2,10 +2,10 @@
 
 # A little hack to make sure paths are as we expect
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-BASE="$(readlink -f $SCRIPT_DIR/../..)"
+HOME="$(readlink -f $SCRIPT_DIR/../..)"
 
-BVECS="$BASE/resources/bvals"
-BVALS="$BASE/resources/bvecs"
+BVECS="$HOME/resources/bvals"
+BVALS="$HOME/resources/bvecs"
 
 cd workdir
 mkdir -p maps

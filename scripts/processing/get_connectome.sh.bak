@@ -2,11 +2,11 @@
 
 # A little hack to make sure paths are as we expect
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-BASE="$(readlink -f $SCRIPT_DIR/../..)"
+HOME="$(readlink -f $SCRIPT_DIR/../..)"
 
 SUBJECT_DIR=$(pwd)
-FS_DEFAULT="$BASE/resources/fs_default.txt"
-FS_COLOR_LUT="$BASE/FreeSurferColorLUT.txt"
+FS_DEFAULT="$HOME/resources/fs_default.txt"
+FS_COLOR_LUT="$HOME/FreeSurferColorLUT.txt"
 
 cd workdir
 mkdir -p connectome

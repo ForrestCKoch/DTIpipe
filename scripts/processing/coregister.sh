@@ -22,7 +22,7 @@ fslmaths fast_pve_2 -thr 0.7 -bin wmseg
 fslmaths $SUBJECT_DIR/workdir/distortion_correction/eddy_corrected_b0 -Tmean b0_mean
 
 # brain extract the b0
-bet b0_mean b0_mean_brain -f 0.2
+bet b0_mean b0_mean_brain -m -f 0.2
 
 # register
 flirt -ref $SUBJECT_DIR/t1 -in b0_mean -dof 6 -cost bbr -wmseg wmseg \

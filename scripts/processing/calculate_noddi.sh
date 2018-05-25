@@ -23,7 +23,7 @@ export TZ='Australia/Sydney'
 
 cp $DIR/calculate_noddi.m .
 
-matlab -nosplash -nojvm -nodesktop -r "calculate_noddi" < /dev/null
+matlab -nosplash -nodesktop -r "calculate_noddi" < /dev/null
 
 rm calculate_noddi.m
 

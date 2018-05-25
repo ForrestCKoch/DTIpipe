@@ -46,11 +46,11 @@ echo "extracting b0 components..."
 # we should replace this with a function to find them automatically
 splitTargets="split0000 split0020 split0040 split0060 split0080 split0100 split0120 split0140"
 
-fslsplit dti_even.nii split -t
+fslsplit dti_even split -t
 fslmerge -t dti_b0 $splitTargets
 rm split*
 
-fslroi blip_even.nii blip_b0 0 1
+fslroi blip_even blip_b0 0 1
 
 echo "merging components"
 fslmerge -t both_b0 dti_b0 blip_b0
@@ -73,7 +73,7 @@ time topup -v --imain=both_b0 --datain=acqparams.txt --config=$b02b0 --out=topup
 
 # let's denoise the data
 echo "denoising diffusion data..."
-mrconvert -fslgrad $BVECS $BVALS dti_even.nii dti.mif
+mrconvert -fslgrad $BVECS $BVALS dti_even* dti.mif
 dwidenoise dti.mif dti_denoised.mif -noise noise.mif
 mrconvert dti_denoised.mif dti_denoised.nii
 mrcalc dti.mif dti_denoised.mif -subtract res.mif

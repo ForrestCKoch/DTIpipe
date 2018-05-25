@@ -15,10 +15,10 @@ cp $SUBJECT_DIR/workdir/coregistration/b0_mean_brain_mask.nii.gz brain_mask.nii.
 cp $BVALS bvals
 cp $BVECS bvecs
 
-for i in *.nii.gz; do gunzip -d $i; done
+for i in *.nii.gz; do gunzip -f -d $i; done
 
 export TZ='Australia/Sydney'
 
-matlab -nojvm -nodesktop -r "try; $DIR/calculate_noddi.m; catch; end; quit" < /dev/null
+matlab -nosplash -nojvm -nodesktop -r "run $DIR/calculate_noddi.m" < /dev/null
 
 cd $SUBJECT_DIR

@@ -1,4 +1,4 @@
-CreateRoi('dti.nii','brain_mask.nii','NODDI_roi.mat')
+CreateROI('dti.nii','brain_mask.nii','NODDI_roi.mat')
 
 protocol = FSL2Protocol('bvals','bvecs')
 

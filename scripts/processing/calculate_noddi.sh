@@ -11,11 +11,13 @@ cd workdir
 mkdir -p noddi_calculation
 cd noddi_calculation
 
-
+echo 'copying files...'
 cp $SUBJECT_DIR/workdir/coregistration/b0_mean_brain_mask.nii.gz brain_mask.nii.gz
 cp $SUBJECT_DIR/workdir/distortion_correction/eddy_corrected.nii.gz dti.nii.gz
 cp $BVALS bvals
 cp $BVECS bvecs
+
+echo 'unzipping...'
 
 for i in *.nii.gz; do gunzip -f -d $i; done
 

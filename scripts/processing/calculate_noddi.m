@@ -4,6 +4,6 @@ protocol = FSL2Protocol('bvals','bvecs')
 
 noddi = MakeModel('WatsonSHStickTortIsoV_B0')
 
-batch_fitting('NODDI_roi.mat',protocol,noddi,'FittedParams.mat',4)
+batch_fitting('NODDI_roi.mat',protocol,noddi,'FittedParams.mat')
 
 SaveParamsAsNIfTI('FittedParams.mat','NODDI_roi.mat','brain_mask.nii','noddi')

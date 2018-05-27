@@ -6,8 +6,8 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BASE="$(readlink -f $SCRIPT_DIR/../..)"
 
 SUBJECT_DIR=$(pwd)
-BVALS="$BASE/resources/bvals"
-BVECS="$BASE/resources/bvecs"
+BVALS="$SUBJECT_DIR/dti.bval"
+BVECS="$SUBJECT_DIR/dti.bvec"
 
 mkdir -p workdir
 cd workdir
@@ -19,43 +19,15 @@ cd distortion_correction
 # Pre-topup preparation
 ######################################################
 
-# first let's handle this annoying requirement for even # of slices
-DTI_SLICES=$(fslval $SUBJECT_DIR/dti dim3)
-# check if even or odd
-if [ $(($DTI_SLICES%2)) -eq 1 ]; then
-    # lose the bottom slice
-    fslroi $SUBJECT_DIR/dti dti_even 0 -1 0 -1 1 -1      
-else
-    cp $SUBJECT_DIR/dti.nii dti_even.nii
-fi
-
-# first let's handle this annoying requirement for even # of slices
-BLIP_SLICES=$(fslval $SUBJECT_DIR/dti dim3)
-# check if even or odd
-if [ $(($BLIP_SLICES%2)) -eq 1 ]; then
-    # lose the bottom slice
-    fslroi $SUBJECT_DIR/blip blip_even 0 -1 0 -1 1 -1      
-else
-    cp $SUBJECT_DIR/blip.nii blip_even.nii
-fi
-
-
-# need to extract the b0 images from the dti
-# in our data they are 0,20,40,60,80,100,120,&140
-echo "extracting b0 components..."
-dwiextract -bzero -fslgrad $BVECS $BVALS dti_even.nii* dti_b0.nii
-
-fslroi blip_even blip_b0 0 1
+cp $SUBJECT_DIR/dti.nii .
 
 echo "merging components"
-fslmerge -t both_b0 dti_b0 blip_b0
+fslmerge -t both_b0 $SUBJECT_DIR/blip_up $SUBJECT_DIR/blip_down
 
 # need to creat an acqparams.txt file
 # according to guide positive blip means signal is displaced upward
 echo -n "" > acqparams.txt
-for i in $(seq 1 8); do
-    echo "0 1 0 .09758" >> acqparams.txt
-done
+echo "0 1 0 .09758" >> acqparams.txt
 echo "0 -1 0 .09758" >> acqparams.txt
 
 ######################################################
@@ -87,9 +59,7 @@ time eddy -v --imain=dti_denoised --mask=mean_mask --acqp=acqparams.txt --index=
 cp eddy_corrected.eddy_rotated_bvecs bvecs_ec
 
 # and remake a new b0 that is eddy corrected
-# in our data they are 0,20,40,60,80,100,120,&140
 echo "extracting eddy corrected b0 components..."
-
 dwiextract -bzero -fslgrad $BVECS $BVALS eddy_corrected eddy_corrected_b0
 
 cd $SUBJECT_DIR

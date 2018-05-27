@@ -17,7 +17,7 @@ mkdir -p QC
 
 # We'll need to create the mif files first
 mrconvert -fslgrad "$BVECS" "$BVALS" \
-    $BASE/dti_undistorted.nii.gz dwi.mif 
+    $BASE/distortion_correction/eddy_corrected.nii.gz dwi.mif 
 
 # generate a mean b0 for visualization
 dwiextract dwi.mif - -bzero | mrmath - mean QC/meanb0.mif -axis 3

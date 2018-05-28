@@ -98,7 +98,7 @@ cp eddy_corrected.eddy_rotated_bvecs bvecs_ec
 # in our data they are 0,20,40,60,80,100,120,&140
 echo "extracting eddy corrected b0 components..."
 
-dwiextract -bzero -fslgrad $BVECS $BVALS eddy_corrected eddy_corrected_b0
+dwiextract -bzero -fslgrad $BVECS $BVALS eddy_corrected.nii.gz eddy_corrected_b0.nii.gz
 
 cd $SUBJECT_DIR
 

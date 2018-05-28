@@ -4,14 +4,18 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BASE="$(readlink -f $SCRIPT_DIR/../..)"
 
-BVECS="$BASE/resources/bvals"
-BVALS="$BASE/resources/bvecs"
+BVALS="$BASE/resources/bvals"
+BVECS="$(pwd)/workdir/distortion_correction/bvecs_ec"
+DTI="$(pwd)/workdir/distortion_correction/eddy_corrected"
+MASK="$(pwd)/workdir/coregistration/b0_mean_brain_mask"
 
 cd workdir
-mkdir -p maps
+mkdir -p fsl_tensor_maps
 fslmaths unwarped_b0 -Tmean mean
 bet mean mean -n -m -f 0.2
 
-dtifit -k undistorted -r $BVECS -b $BVALS -o maps/dti -m mean_mask
+mkdir fsl_kurt_maps
+dtifit -k $DTI -r $BVECS -b $BVALS -o fsl_tensor_maps/dti -m mean_mask
+dtifit --kurt -k $DTI -r $BVECS -b $BVALS -o fsl_kurt_maps/dti -m mean_mask
 
 cd ../

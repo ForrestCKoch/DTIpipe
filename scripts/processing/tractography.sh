@@ -5,8 +5,10 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BASE="$(readlink -f $SCRIPT_DIR/../..)"
 
 SUBJECT_DIR="$(pwd)"
-BVECS="$BASE/resources/bvecs"
 BVALS="$BASE/resources/bvals"
+
+BVECS="$BASE/resources/bvecs"
+BVECS="$(pwd)/workdir/distortion_correction/bvecs_ec"
 
 cd workdir
 BASE="$(pwd)"

@@ -81,8 +81,16 @@ for i in $(seq 1 $(fslval dti_denoised dim4)); do
     echo -n '1 '
 done > index.txt
 
-time eddy -v --imain=dti_denoised --mask=mean_mask --acqp=acqparams.txt --index=index.txt \
-    --bvals=$BVALS --bvecs=$BVECS --topup=topup --out=eddy_corrected --data_is_shelled
+if hash eddy 2>/dev/null; then
+    time eddy -v --imain=dti_denoised --mask=mean_mask --acqp=acqparams.txt \
+        --index=index.txt --bvals=$BVALS --bvecs=$BVECS --topup=topup \
+        --out=eddy_corrected --data_is_shelled
+else;
+    time eddy_openmp -v --imain=dti_denoised --mask=mean_mask \
+        --acqp=acqparams.txt \
+        --index=index.txt --bvals=$BVALS --bvecs=$BVECS --topup=topup \
+        --out=eddy_corrected --data_is_shelled
+fi
 
 cp eddy_corrected.eddy_rotated_bvecs bvecs_ec
 

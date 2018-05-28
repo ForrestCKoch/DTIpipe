@@ -85,7 +85,7 @@ if hash eddy 2>/dev/null; then
     time eddy -v --imain=dti_denoised --mask=mean_mask --acqp=acqparams.txt \
         --index=index.txt --bvals=$BVALS --bvecs=$BVECS --topup=topup \
         --out=eddy_corrected --data_is_shelled
-else;
+else
     time eddy_openmp -v --imain=dti_denoised --mask=mean_mask \
         --acqp=acqparams.txt \
         --index=index.txt --bvals=$BVALS --bvecs=$BVECS --topup=topup \

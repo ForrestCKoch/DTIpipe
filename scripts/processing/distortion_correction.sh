@@ -89,7 +89,7 @@ else
     time eddy_openmp -v --imain=dti_denoised --mask=mean_mask \
         --acqp=acqparams.txt \
         --index=index.txt --bvals=$BVALS --bvecs=$BVECS --topup=topup \
-        --out=eddy_corrected --data_is_shelled
+        --out=eddy_corrected
 fi
 
 cp eddy_corrected.eddy_rotated_bvecs bvecs_ec

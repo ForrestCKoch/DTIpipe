@@ -7,7 +7,6 @@ BASE="$(readlink -f $SCRIPT_DIR/../..)"
 SUBJECT_DIR="$(pwd)"
 BVALS="$BASE/resources/bvals"
 
-BVECS="$BASE/resources/bvecs"
 BVECS="$(pwd)/workdir/distortion_correction/bvecs_ec"
 
 cd workdir

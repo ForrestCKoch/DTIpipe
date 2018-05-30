@@ -18,7 +18,7 @@ mkdir -p fsl_kurt_maps
 #fslmaths unwarped_b0 -Tmean mean
 #bet mean mean -n -m -f 0.2
 
-dtifit -k $DTI -r $BVECS -b $BVALS -o fsl_tensor_maps/dti -m $MASK
+dtifit -k $DTI -r $BVECS -b $BVALS -o fsl_dti_maps/dti -m $MASK
 dtifit --kurt -k $DTI -r $BVECS -b $BVALS -o fsl_kurt_maps/kurt -m $MASK
 
 cd ../

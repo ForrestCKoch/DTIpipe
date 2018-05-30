@@ -1,4 +1,4 @@
-#!/bin/sh -v
+#!/bin/sh
 
 # A little hack to make sure paths are as we expect
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -15,10 +15,10 @@ cd response_maps
 mkdir -p fsl_dti_maps
 mkdir -p fsl_kurt_maps
 
-fslmaths unwarped_b0 -Tmean mean
-bet mean mean -n -m -f 0.2
+#fslmaths unwarped_b0 -Tmean mean
+#bet mean mean -n -m -f 0.2
 
-dtifit -k $DTI -r $BVECS -b $BVALS -o fsl_tensor_maps/dti -m mean_mask
-dtifit --kurt -k $DTI -r $BVECS -b $BVALS -o fsl_kurt_maps/dti -m mean_mask
+dtifit -k $DTI -r $BVECS -b $BVALS -o fsl_tensor_maps/dti -m $MASK
+dtifit --kurt -k $DTI -r $BVECS -b $BVALS -o fsl_kurt_maps/kurt -m $MASK
 
 cd ../

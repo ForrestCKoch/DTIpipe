@@ -30,20 +30,20 @@ mrconvert $SUBJECT_DIR/workdir/coregistration/t1_coregistered.nii.gz t1.mif
 # create mask and tensor metrics
 ###############################################################################
 dwi2mask -bvalue_scaling 'no' dwi.mif mask.mif
-dwi2tensor -bvalue_scaling 'no' -mask mask.mif dwi.mif tensor.mif
-tensor2metric tensor.mif -adc tensor_metrics/adc.mif
-tensor2metric tensor.mif -fa  tensor_metrics/fa.mif
-tensor2metric tensor.mif -ad  tensor_metrics/ad.mif
-tensor2metric tensor.mif -rd  tensor_metrics/rd.mif
-tensor2metric tensor.mif -cl  tensor_metrics/cl.mif
-tensor2metric tensor.mif -cp  tensor_metrics/cp.mif
-tensor2metric tensor.mif -cs  tensor_metrics/cs.mif
-tensor2metric tensor.mif -vector tensor_metrics/v1.mif -num 1
-tensor2metric tensor.mif -vector tensor_metrics/v2.mif -num 2
-tensor2metric tensor.mif -vector tensor_metrics/v3.mif -num 3
-tensor2metric tensor.mif -value  tensor_metrics/l1.mif -num 1
-tensor2metric tensor.mif -value  tensor_metrics/l2.mif -num 2
-tensor2metric tensor.mif -value  tensor_metrics/l3.mif -num 3
+#dwi2tensor -bvalue_scaling 'no' -mask mask.mif dwi.mif tensor.mif
+#tensor2metric tensor.mif -adc tensor_metrics/adc.mif
+#tensor2metric tensor.mif -fa  tensor_metrics/fa.mif
+#tensor2metric tensor.mif -ad  tensor_metrics/ad.mif
+#tensor2metric tensor.mif -rd  tensor_metrics/rd.mif
+#tensor2metric tensor.mif -cl  tensor_metrics/cl.mif
+#tensor2metric tensor.mif -cp  tensor_metrics/cp.mif
+#tensor2metric tensor.mif -cs  tensor_metrics/cs.mif
+#tensor2metric tensor.mif -vector tensor_metrics/v1.mif -num 1
+#tensor2metric tensor.mif -vector tensor_metrics/v2.mif -num 2
+#tensor2metric tensor.mif -vector tensor_metrics/v3.mif -num 3
+#tensor2metric tensor.mif -value  tensor_metrics/l1.mif -num 1
+#tensor2metric tensor.mif -value  tensor_metrics/l2.mif -num 2
+#tensor2metric tensor.mif -value  tensor_metrics/l3.mif -num 3
 
 ###############################################################################
 # constrained spherical deconvolution (CSD)

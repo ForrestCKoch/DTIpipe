@@ -41,4 +41,3 @@ flirt -in $WMSEG -ref $B0_MEAN_BRAIN -applyxfm \
 	-init $T1_TO_B0_MAT -interp nearestneighbour -out wm_mask_dwi_space
 flirt -in flair_brain_t1_space -ref $B0_MEAN_BRAIN -applyxfm \
 	-init $T1_TO_B0_MAT -out flair_brain_dwi_space
-

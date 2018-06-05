@@ -18,26 +18,37 @@ cd workdir
 mkdir -p wmh_vs_nawm
 cd wmh_vs_nawm
 
+mkdir -p wmh_shells
+cd wmh_shells
+
+cp ../wmh_mask_dwi_space.nii.gz wmh_mask.nii.gz
+
 echo "creating dilation masks"
 # create some dilation masks
-prev="wmh_mask_dwi_space"
+prev="wmh_mask"
 for i in $(seq 2 6); do
-	echo "\t${i}mm..."
+	echo "    ${i}mm..."
 	mname="dilated_${i}mm_gauss_wmh_mask"
 	# create the 'full' mask first
-	fslmaths wmh_mask_dwi_space -kernel gauss $i -dilM \
-		-mas wm_mask_dwi_space dialated_${i}mm_gaussian_wmh
+	fslmaths "../wmh_mask_dwi_space" -kernel gauss $i -dilM \
+		-mas "../wm_mask_dwi_space" $mname
 	# now create the 'shell'
 	fslmaths $mname -sub $prev -thr 0 shelled_$mname
 	prev=$mname
 	# we could also create a new 'nawm' however, it might start
 	# to shrink too much
+done
 
+prev="wmh_mask"
 echo "creating erosion masks" 
 for i in $(seq 2 4); do
-	echo "\t${i}mm..."
+	echo "    ${i}mm..."
+	# create the full mask
 	mname="eroded_${i}mm_gauss_wmh_mask"
-	fslmaths wmh_mask_dwi_space -kernel gauss $i $mname
+	fslmaths "../wmh_mask_dwi_space" -kernel gauss $i -ero $mname 
+	# create the shell
+	fslmaths $prev -sub $mname -thr 0 shelled_$prev
+	prev=$mname
+done
 	
-
-	
+cd $SUBJECT_DIR

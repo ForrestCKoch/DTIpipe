@@ -21,11 +21,11 @@ NAWM="nawm_mask_dwi_space"
 echo "calculating means from masks..."
 # create our csv
 echo -n '' > comparison_results.csv
-echo "filename,wm_mean,wm_sd,wmh_mean,wmh_sd,nawm_mean,nawm_sd"\
+echo "map,wm_mean,wm_sd,wmh_mean,wmh_sd,nawm_mean,nawm_sd"\
 	>>comparison_results.csv
 
 for map in $(ls $SUBJECT_DIR/workdir/response_maps/*/*); do
-	map_name=$(echo $map|rev|cut -d'/' -f1|rev)
+	map_name=$(echo $map|rev|cut -d'/' -f1|rev|cut -d'.' -f1)
 	echo $map_name
 	WM_MEAN=$(fslstats $map -k $WM -M)
 	WM_SDEV=$(fslstats $map -k $WM -S)
@@ -38,7 +38,7 @@ for map in $(ls $SUBJECT_DIR/workdir/response_maps/*/*); do
 done
 
 for map in $(ls $SUBJECT_DIR/workdir/noddi_calculation/noddi_*); do
-	map_name=$(echo $map|rev|cut -d'/' -f1|rev)
+	map_name=$(echo $map|rev|cut -d'/' -f1|rev|cut -d'.' -f1)
 	echo $map_name
 	WM_MEAN=$(fslstats $map -k $WM -M)
 	WM_SDEV=$(fslstats $map -k $WM -S)

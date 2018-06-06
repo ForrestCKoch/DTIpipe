@@ -18,36 +18,42 @@ WMH="wmh_mask_dwi_space"
 WM="wm_mask_dwi_space"
 NAWM="nawm_mask_dwi_space"
 
-echo "calculating means from masks..."
+cd workdir/wmh_vs_nawm
+
+echo "calculating means from shells"
 # create our csv
-echo -n '' > comparison_results.csv
-echo "filename,wm_mean,wm_sd,wmh_mean,wmh_sd,nawm_mean,nawm_sd"\
-	>>comparison_results.csv
+echo -n '' > shell_comparison_results.csv
+echo -n "filename" >> shell_comparison_results.csv
+for mask in $(ls wmh_shells/*); do
+	name=$(echo $mask|cut -d'/' -f2|cut -d'.' -f1)	
+	echo -n ",${name} mean,${name} sdev" >> shell_comparison_results.csv
+done
+echo "" >> shell_comparison_results.csv
 
 for map in $(ls $SUBJECT_DIR/workdir/response_maps/*/*); do
-	map_name=$(echo $map|rev|cut -d'/' -f1|rev)
+	map_name=$(echo $map|rev|cut -d'/' -f1|rev|cut -d'.' -f1)
 	echo $map_name
-	WM_MEAN=$(fslstats $map -k $WM -M)
-	WM_SDEV=$(fslstats $map -k $WM -S)
-	WMH_MEAN=$(fslstats $map -k $WMH -M)
-	WMH_SDEV=$(fslstats $map -k $WMH -S)
-	NAWM_MEAN=$(fslstats $map -k $NAWM -M)
-	NAWM_SDEV=$(fslstats $map -k $NAWM -S)
-	echo "$map_name,$WM_MEAN,$WM_SDEV,$WMH_MEAN,$WMH_SDEV,$NAWM_MEAN,$NAWM_SDEV" \
-		>> comparison_results.csv
+	echo -n "$map_name" >> shell_comparison_results.csv
+	for mask in $(ls wmh_shells/*); do
+		mask_name=$(echo $mask|cut -d'/' -f2|cut -d'.' -f1)	
+		MEAN=$(fslstats $map -k $mask -M)
+		SDEV=$(fslstats $map -k $mask -S)
+		echo -n ",$MEAN,$SDEV" >> shell_comparison_results.csv
+	done
+	echo '' >> shell_comparison_results.csv
 done
 
 for map in $(ls $SUBJECT_DIR/workdir/noddi_calculation/noddi_*); do
-	map_name=$(echo $map|rev|cut -d'/' -f1|rev)
+	map_name=$(echo $map|rev|cut -d'/' -f1|rev|cut -d'.' -f1)
 	echo $map_name
-	WM_MEAN=$(fslstats $map -k $WM -M)
-	WM_SDEV=$(fslstats $map -k $WM -S)
-	WMH_MEAN=$(fslstats $map -k $WMH -M)
-	WMH_SDEV=$(fslstats $map -k $WMH -S)
-	NAWM_MEAN=$(fslstats $map -k $NAWM -M)
-	NAWM_SDEV=$(fslstats $map -k $NAWM -S)
-	echo "$map_name,$WM_MEAN,$WM_SDEV,$WMH_MEAN,$WMH_SDEV,$NAWM_MEAN,$NAWM_SDEV" \
-		>> comparison_results.csv
+	echo -n "$map_name" >> shell_comparison_results.csv
+	for mask in $(ls wmh_shells/*); do
+		mask_name=$(echo $mask|cut -d'/' -f2|cut -d'.' -f1)	
+		MEAN=$(fslstats $map -k $mask -M)
+		SDEV=$(fslstats $map -k $mask -S)
+		echo -n ",$MEAN,$SDEV" >> shell_comparison_results.csv
+	done
+	echo '' >> shell_comparison_results.csv
 done
 
 cd $SUBJECT_DIR

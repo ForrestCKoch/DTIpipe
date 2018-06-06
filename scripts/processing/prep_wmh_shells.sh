@@ -41,7 +41,7 @@ done
 
 prev="wmh_mask"
 echo "creating erosion masks" 
-for i in $(seq 2 4); do
+for i in $(seq 2 3); do
 	echo "    ${i}mm..."
 	# create the full mask
 	mname="eroded_${i}mm_gauss_wmh_mask"

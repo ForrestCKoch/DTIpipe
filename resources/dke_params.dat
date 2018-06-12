@@ -2,7 +2,7 @@
  
 studydir = '.';                 		% root folder for data from all study subjects
  
-subject_list = {'outdir'};                        		% cell array of subject sub-folders within the root folder studydir
+subject_list = {'dke'};                        		% cell array of subject sub-folders within the root folder studydir
  
 % preprocessing... 
 preprocess_options.format = 'nifti';

@@ -10,7 +10,7 @@ BVECS="$SUBJECT_DIR/workdir/distortion_correction/bvecs_ec"
 cd workdir
 mkdir -p kurtosis_calculation
 cd kurtosis_calculation
-mkdir -p outdir
+mkdir -p dke
 
 echo 'building bvecs table...'
 $BASE/scripts/helpers/generate_dke_bvecs_table.py $BVECS

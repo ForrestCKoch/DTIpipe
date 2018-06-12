@@ -8,7 +8,7 @@ subject_list = {'outdir'};                        		% cell array of subject sub-
 preprocess_options.format = 'nifti';
 preprocess_options.navg = 1;
 preprocess_options.extra_b0 = 1;
-preprocess_options.coreg_flag = 1;
+preprocess_options.coreg_flag = 0;
 preprocess_options.series_description = {'DKI1' 'DKI2' 'DKI_B0'};
 preprocess_options.fn_nii = 'dti.nii';
 
@@ -37,7 +37,7 @@ Kmax_final = 3;
 % tissue/background segmentation
 
 T = 50;                                            	% background threshold (default: 50); voxels with b = 0 intensity values above this threshold (after optional connected component analysis) are processed
-find_brain_mask_flag = 1;                      		% whether (1) or not (0) to apply connected component analysis to refine the binary brain mask obtained by applying threshold T to b = 0 image (default: 1)
+find_brain_mask_flag = 0;                      		% whether (1) or not (0) to apply connected component analysis to refine the binary brain mask obtained by applying threshold T to b = 0 image (default: 1)
  
 % DKI fitting method and parameters
 
@@ -51,7 +51,7 @@ dki_method.noise_tolerance = 0.09;          		% threshold for outlier detection 
  
 % DTI fitting method and parameters
 
-dti_method.dti_flag = 0;                    		% whether (1) or not (0) to estimate DTI parametric maps based on the DTI (in addition to DKI) signal model (default: 0)
+dti_method.dti_flag = 1;                    		% whether (1) or not (0) to estimate DTI parametric maps based on the DTI (in addition to DKI) signal model (default: 0)
 dti_method.dti_only = 0;                    		% whether (1) or not (0) to only estimate DTI parametric maps (no DKI map estimation) (default: 0)
 dti_method.no_tensor = 0;                   		% whether (1) or not (0) to estimate parametric maps using directional signal fits instead of the default diffusion tensor fit (default: 0); directional fits only allow estimation of mean diffusivity; not recommended unless the number of acquired gradient directions is less than 6
 dti_method.linear_weighting = 1;            		% unweighted (0) or weighted (1) linear least-squares (default: 1); weighting is based on the diffusion signal magnitude
@@ -62,7 +62,7 @@ dti_method.noise_tolerance = 0.09;          		% threshold for outlier detection 
  
 % diffusion-weighted image filtering
 
-fwhm_img = 1.25 * [2.7 2.7 2.7];            		% full width at half maximum (FWHM) (in mm) of Gaussian kernel for smoothing diffusion-weighted images (default: 1.25 * voxel size); a zero value indicates no smoothing
+fwhm_img = 0 * [2 2 2];            		% full width at half maximum (FWHM) (in mm) of Gaussian kernel for smoothing diffusion-weighted images (default: 1.25 * voxel size); a zero value indicates no smoothing
  
 % Rician noise subtraction
 
@@ -75,6 +75,6 @@ median_filter_method = 2;                   		% selective median filtering appli
  
 % parametric map interpolation
 
-map_interpolation_method.flag = 1;          		% whether (1) or not (0) to interpolate the parametric maps (default: 1)
+map_interpolation_method.flag = 0;          		% whether (1) or not (0) to interpolate the parametric maps (default: 1)
 map_interpolation_method.order = 1;         		% interpolation polynomial order: (0) nearest neighbor; (1) trilinear; (2 and up) higher order (default: 1)
-map_interpolation_method.resolution = 1;    		% target resolution (isotropic) in mm for the interpolated maps (default: 1 mm)
+map_interpolation_method.resolution = 2;    		% target resolution (isotropic) in mm for the interpolated maps (default: 1 mm)

@@ -10,7 +10,7 @@ preprocess_options.navg = 1;
 preprocess_options.extra_b0 = 1;
 preprocess_options.coreg_flag = 0;
 preprocess_options.series_description = {'DKI1' 'DKI2' 'DKI_B0'};
-preprocess_options.fn_nii = 'dti.nii';
+preprocess_options.fn_nii = 'dti_brain.nii';
 
 % imaging diffusion weightings and directions
 

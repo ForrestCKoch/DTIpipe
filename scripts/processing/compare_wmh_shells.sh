@@ -30,7 +30,8 @@ for mask in $(ls wmh_shells/*); do
 done
 echo "" >> shell_comparison_results.csv
 
-for map in $(ls $SUBJECT_DIR/workdir/response_maps/*/*); do
+# for fsl results
+for map in $(ls $SUBJECT_DIR/workdir/response_maps/*/*.nii*); do
 	map_name=$(echo $map|rev|cut -d'/' -f1|rev|cut -d'.' -f1)
 	echo $map_name
 	echo -n "$map_name" >> shell_comparison_results.csv
@@ -43,7 +44,22 @@ for map in $(ls $SUBJECT_DIR/workdir/response_maps/*/*); do
 	echo '' >> shell_comparison_results.csv
 done
 
-for map in $(ls $SUBJECT_DIR/workdir/noddi_calculation/noddi_*); do
+# for noddi results
+for map in $(ls $SUBJECT_DIR/workdir/noddi_calculation/noddi_*.nii*); do
+	map_name=$(echo $map|rev|cut -d'/' -f1|rev|cut -d'.' -f1)
+	echo $map_name
+	echo -n "$map_name" >> shell_comparison_results.csv
+	for mask in $(ls wmh_shells/*); do
+		mask_name=$(echo $mask|cut -d'/' -f2|cut -d'.' -f1)	
+		MEAN=$(fslstats $map -k $mask -M)
+		SDEV=$(fslstats $map -k $mask -S)
+		echo -n ",$MEAN,$SDEV" >> shell_comparison_results.csv
+	done
+	echo '' >> shell_comparison_results.csv
+done
+
+# for DKE results
+for map in $(ls $SUBJECT_DIR/workdir/kurtosis_calculation/dke/dke_*.nii*); do
 	map_name=$(echo $map|rev|cut -d'/' -f1|rev|cut -d'.' -f1)
 	echo $map_name
 	echo -n "$map_name" >> shell_comparison_results.csv

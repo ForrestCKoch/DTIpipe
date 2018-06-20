@@ -9,6 +9,7 @@ B0_MASK="$SUBJECT_DIR/workdir/coregistration/b0_mean_brain_mask"
 DKE_PARAM="$BASE/resources/dke_params.dat"
 BVECS="$SUBJECT_DIR/workdir/distortion_correction/bvecs_ec"
 
+
 cd workdir
 mkdir -p kurtosis_calculation
 cd kurtosis_calculation
@@ -32,6 +33,11 @@ echo 'unzipping dti ...'
 gunzip dti_brain.nii.gz
 
 mv dti_brain.nii dke/
+
+# setup DKE
+RUN_DKE="/home/forrest/local/builds/DKE/run_dke.sh"
+MATLAB_RUNTIME="/data_pub/forrest/MATLAB/MATLAB_Compiler_Runtime/v717/"
+bash $RUN_DKE $MATLAB_RUNTIME
 
 echo 'running dke ...'
 dke $DKE_PARAM

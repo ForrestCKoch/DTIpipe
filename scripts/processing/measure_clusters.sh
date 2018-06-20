@@ -30,7 +30,6 @@ done
 echo "" >> cluster_results.csv
 
 # get clusters
-cluster --in=$WMH_MASK --thresh=1 --oindex=index --osize=size > cluster.txt
 lines=$(cat cluster.txt|tail -n $(( $(cat cluster.txt|wc -l) -1)))
 
 while read c; do
@@ -39,19 +38,7 @@ size=$(echo $c|cut -d' ' -f2)
 
 echo "cluster #: $id"
 
-fslmaths index -thr $id -uthr $id -bin cluster_${id}_${size}
-gunzip cluster_${id}_${size}.nii.gz
-matlab -nosplash -nodesktop -r "\
-fp = fopen('cluster_${id}_props.txt','w');\
-mask = readnifti('cluster_${id}_${size}.nii');\
-stats = regionprops3(mask,{'Volume' 'SurfaceArea'});\
-v = stats.Volume;\
-s = stats.SurfaceArea;\
-sphericity = ((pi^(1/3))*(6*stats.Volume)^(2/3))/stats.SurfaceArea;\
-fprintf(fp,'%f,%f,%f',stats.Volume,stats.SurfaceArea,sphericity);\
-fp.close();\
-"</dev/null > /dev/null 2>&1
-echo -n $(cat cluster_${id}_props.txt|sed 's/\n//') >> cluster_results.csv
+echo -n $id,$(cat cluster_${id}_props.txt|sed 's/\n//') >> cluster_results.csv
 
 for map in $(ls $SUBJECT_DIR/workdir/response_maps/*/*.nii*); do
 	map_name=$(echo $map|rev|cut -d'/' -f1|rev|cut -d'.' -f1)
@@ -73,6 +60,5 @@ echo "" >> cluster_results.csv
 
 
 done <<< "$lines"
-
 
 cd $SUBJECT_DIR

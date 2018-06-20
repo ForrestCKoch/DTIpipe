@@ -67,26 +67,26 @@ time topup -v --imain=both_b0 --datain=acqparams.txt --config=$b02b0 --out=topup
     --fout=field_map --iout=b0_undistorted
 
 # let's denoise the data
-#echo "denoising diffusion data..."
-#mrconvert -fslgrad $BVECS $BVALS dti_even* dti.mif
-#dwidenoise dti.mif dti_denoised.mif -noise noise.mif
-#mrconvert dti_denoised.mif dti_denoised.nii
-#mrcalc dti.mif dti_denoised.mif -subtract res.mif
+echo "denoising diffusion data..."
+mrconvert -fslgrad $BVECS $BVALS dti_even* dti.mif
+dwidenoise dti.mif dti_denoised.mif -noise noise.mif
+mrconvert dti_denoised.mif dti_denoised.nii
+mrcalc dti.mif dti_denoised.mif -subtract res.mif
 
 # generate a mask from b0's
 fslmaths b0_undistorted -Tmean mean
 bet mean mean -m -n -f 0.2
 
-for i in $(seq 1 $(fslval dti_even dim4)); do
+for i in $(seq 1 $(fslval dti_denoised dim4)); do
     echo -n '1 '
 done > index.txt
 
 if hash eddy 2>/dev/null; then
-    time eddy -v --imain=dti_even --mask=mean_mask --acqp=acqparams.txt \
+    time eddy -v --imain=dti_denoised --mask=mean_mask --acqp=acqparams.txt \
         --index=index.txt --bvals=$BVALS --bvecs=$BVECS --topup=topup \
         --out=eddy_corrected --data_is_shelled
 else
-    time eddy_openmp -v --imain=dti_even --mask=mean_mask \
+    time eddy_openmp -v --imain=dti_denoised --mask=mean_mask \
         --acqp=acqparams.txt \
         --index=index.txt --bvals=$BVALS --bvecs=$BVECS --topup=topup \
         --out=eddy_corrected

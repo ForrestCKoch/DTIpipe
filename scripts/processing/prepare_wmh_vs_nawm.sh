@@ -9,6 +9,8 @@ FLAIR="$SUBJECT_DIR/workdir/WMH_extract/subjects/*/mri/orig/*_FLAIR.nii"
 WMH_MASK="$SUBJECT_DIR/workdir/WMH_extract/subjects/*/mri/extractedWMH/*_WMH_FLAIRspace.nii.gz"
 
 T1="$SUBJECT_DIR/t1.nii"
+T1_BRAIN="$SUBJECT_DIR/workdir/coregistration/t1_brain"
+T1_BRAIN_MASK="$SUBJECT_DIR/workdir/coregistration/t1_brain_mask"
 WMSEG="$SUBJECT_DIR/workdir/coregistration/wmseg.nii.gz"
 
 T1_TO_B0_MAT="$SUBJECT_DIR/workdir/coregistration/t1_to_b0.mat"
@@ -18,13 +20,14 @@ cd workdir
 mkdir -p wmh_vs_nawm
 cd wmh_vs_nawm
 
-echo "performing brain extraction..."
-bet $T1 t1_brain
-bet $FLAIR flair_brain
+#echo "performing brain extraction..."
+#bet $T1 t1_brain
+#bet $FLAIR flair_brain
 # coregister t1 and flair to get the wmh mask in t1 space
 echo "converting flair to t1 space..."
-flirt -in flair_brain -ref t1_brain -dof 6 -omat flair_to_t1.mat \
-	-out flair_brain_t1_space
+flirt -in $FLAIR -ref $T1_BRAIN -dof 6 -omat flair_to_t1.mat \
+	-out flair_t1_space
+fslmaths flair_t1_space -mas $T1_BRAIN_MASK flair_brain_t1_space
 flirt -in $WMH_MASK -ref t1_brain -applyxfm -init flair_to_t1.mat \
 	-interp nearestneighbour -out wmh_mask_t1_space
 

@@ -14,7 +14,7 @@ cd clusters
 
 # prepare our header
 echo -n '' > cluster_results.csv
-echo -n '#,Vol,SA,SP' >> cluster_results.csv
+echo -n '#,Vol,SA,SP,BR,EC,' >> cluster_results.csv
 for map in $(ls $SUBJECT_DIR/workdir/response_maps/*/*.nii*); do
 	map_name=$(echo $map|rev|cut -d'/' -f1|rev|cut -d'.' -f1)
 	echo -n ",$map_name" >> cluster_results.csv
@@ -38,21 +38,21 @@ size=$(echo $c|cut -d' ' -f2)
 
 echo "cluster #: $id"
 
-echo -n $id,$(cat cluster_${id}_props.txt|sed 's/\n//') >> cluster_results.csv
+echo -n $id,$(cat cluster_stats/cluster_${id}.csv|sed 's/\n//') >> cluster_results.csv
 
 for map in $(ls $SUBJECT_DIR/workdir/response_maps/*/*.nii*); do
 	map_name=$(echo $map|rev|cut -d'/' -f1|rev|cut -d'.' -f1)
-	MEAN=$(fslstats $map -k cluster_${id}_${size} -M)
+	MEAN=$(fslstats $map -k dwi_clusters/cluster_${id} -M)
 	echo -n "$MEAN" >> cluster_results.csv
 done
 for map in $(ls $SUBJECT_DIR/workdir/noddi_calculation/noddi_*.nii*); do
 	map_name=$(echo $map|rev|cut -d'/' -f1|rev|cut -d'.' -f1)
-	MEAN=$(fslstats $map -k cluster_${id}_${size} -M)
+	MEAN=$(fslstats $map -k dwi_clusters/cluster_${id} -M)
 	echo -n "$MEAN" >> cluster_results.csv
 done
 for map in $(ls $SUBJECT_DIR/workdir/kurtosis_calculation/dke/dke_*.nii*); do
 	map_name=$(echo $map|rev|cut -d'/' -f1|rev|cut -d'.' -f1)
-	MEAN=$(fslstats $map -k cluster_${id}_${size} -M)
+	MEAN=$(fslstats $map -k dwi_clusters/cluster_${id} -M)
 	echo -n "$MEAN" >> cluster_results.csv
 done
 

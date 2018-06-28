@@ -20,6 +20,10 @@ cd workdir
 mkdir -p wmh_vs_nawm
 cd wmh_vs_nawm
 
+cp $WMH_MASK wmh_mask_flair_space.nii.gz
+# perform clustering in FLAIR space first
+#cluster --in=$WMH_MASK --thresh=1 --oindex=index_flair_space --osize=size_flair_space > clusters.txt
+
 #echo "performing brain extraction..."
 #bet $T1 t1_brain
 #bet $FLAIR flair_brain
@@ -28,7 +32,7 @@ echo "converting flair to t1 space..."
 flirt -in $FLAIR -ref $T1_BRAIN -dof 6 -omat flair_to_t1.mat \
 	-out flair_t1_space
 fslmaths flair_t1_space -mas $T1_BRAIN_MASK flair_brain_t1_space
-flirt -in $WMH_MASK -ref t1_brain -applyxfm -init flair_to_t1.mat \
+flirt -in $WMH_MASK -ref $T1_BRAIN -applyxfm -init flair_to_t1.mat \
 	-interp nearestneighbour -out wmh_mask_t1_space
 
 # now generate nawm mask
@@ -44,5 +48,8 @@ flirt -in $WMSEG -ref $B0_MEAN_BRAIN -applyxfm \
 	-init $T1_TO_B0_MAT -interp nearestneighbour -out wm_mask_dwi_space
 flirt -in flair_brain_t1_space -ref $B0_MEAN_BRAIN -applyxfm \
 	-init $T1_TO_B0_MAT -out flair_brain_dwi_space
+
+# for convenience generate a matrix from flair to dwi
+convert_xfm -omat flair_to_dwi.mat -concat $T1_TO_B0_MAT flair_to_t1.mat
 
 cd $SUBJECT_DIR

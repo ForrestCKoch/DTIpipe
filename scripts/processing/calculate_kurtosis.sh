@@ -30,7 +30,7 @@ rm tmp.nii.gz
 rm vol*
 
 echo 'unzipping dti ...'
-gunzip dti_brain.nii.gz
+gunzip -f dti_brain.nii.gz
 
 mv dti_brain.nii dke/
 

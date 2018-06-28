@@ -36,12 +36,12 @@ while read c; do
     fslmaths index_flair -thr $id -uthr $id \
 		-bin flair_clusters/cluster_${id}
 
-    gunzip flair_clusters/cluster_${id}.nii.gz
+    gunzip -f flair_clusters/cluster_${id}.nii.gz
 
     fslmaths index_dwi -thr $id -uthr $id \
 		-bin dwi_clusters/cluster_${id}
 
-    gunzip dwi_clusters/cluster_${id}.nii.gz
+    gunzip -f dwi_clusters/cluster_${id}.nii.gz
 
 
 done <<< "$lines"

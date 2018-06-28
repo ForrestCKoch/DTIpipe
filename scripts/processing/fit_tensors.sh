@@ -24,7 +24,7 @@ fslmaths fsl_dti_maps/dti_L1 -add fsl_dti_maps/dti_L2 -div 2 \
 cp fsl_dti_maps/dti_L1 fsl_dti_maps/dti_AD
 fslmaths fsl_kurt_maps/dti_L1 -add fsl_kurt_maps/kurt_L2 -div 2 \
 	fsl_kurt_maps/kurt_RD
-cp fsl_kurt_maps/kurt_L1 fsl_kurt_maps/kurt_AD
+#cp fsl_kurt_maps/kurt_L1 fsl_kurt_maps/kurt_AD
 
 for i in 700 1000 2800 700_1000; do
 	mkdir -p fsl_$i
@@ -35,7 +35,7 @@ for i in 700 1000 2800 700_1000; do
 		-o fsl_$i/dti_$i -m $MASK
 	fslmaths fsl_$i/dti_${i}_L1 -add fsl_$i/dti_${i}_L2 -div 2 \
 		fsl_$i/dti_${i}_RD
-	cp fsl_$i/dti_${i}_L1 fsl_$i/dti_${i}_AD
+	#cp fsl_$i/dti_${i}_L1 fsl_$i/dti_${i}_AD
 done
 
 cd ../

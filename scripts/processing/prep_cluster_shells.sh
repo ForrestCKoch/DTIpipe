@@ -38,8 +38,8 @@ for i in $(seq 1 $CNUM); do
 	prev_mask="$CLUSTDIR/cluster_$i"
 	for j in $(seq 2 3); do
 		echo "        ${j}mm..."
-		ename="cluster_${i}/cluster_${i}_eroded_{$j}mm_gauss_mask"	
-		mname="cluster_${i}/cluster_${i}_shelled_eroded_{$j}mm_gauss_mask"	
+		ename="cluster_${i}/cluster_${i}_eroded_${j}mm_gauss_mask"	
+		mname="cluster_${i}/cluster_${i}_shelled_eroded_${j}mm_gauss_mask"	
 		fslmaths $cluster -kernel gauss $j -ero $ename
 		fslmaths $prev_mask -sub $ename -thr 0 $mname
 		prev_mask=$ename

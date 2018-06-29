@@ -45,9 +45,12 @@ flirt -in wmh_mask_t1_space -ref $B0_MEAN_BRAIN -applyxfm \
 flirt -in nawm_mask_t1_space -ref $B0_MEAN_BRAIN -applyxfm \
 	-init $T1_TO_B0_MAT -interp nearestneighbour -out nawm_mask_dwi_space
 flirt -in $WMSEG -ref $B0_MEAN_BRAIN -applyxfm \
-	-init $T1_TO_B0_MAT -interp nearestneighbour -out wm_mask_dwi_space
+	-init $T1_TO_B0_MAT -interp nearestneighbour -out incomp_wm_mask_dwi_space
 flirt -in flair_brain_t1_space -ref $B0_MEAN_BRAIN -applyxfm \
 	-init $T1_TO_B0_MAT -out flair_brain_dwi_space
+
+# create a true wm_mask
+fslmaths incomp_wm_mask_dwi_space -add wmh_mask_dwi_space -bin wm_mask_dwi_space
 
 # for convenience generate a matrix from flair to dwi
 convert_xfm -omat flair_to_dwi.mat -concat $T1_TO_B0_MAT flair_to_t1.mat

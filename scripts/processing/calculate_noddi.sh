@@ -2,7 +2,8 @@
 
 SUBJECT_DIR="$(pwd)"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-BASE="$(readlink -f $DIR/../..)"
+# BASE="$(readlink -f $DIR/../..)"
+BASE="$DTIPIPE"
 
 BVALS="$BASE/resources/bvals"
 BVECS="$SUBJECT_DIR/workdir/distortion_correction/bvecs_ec"
@@ -23,7 +24,7 @@ for i in *.nii.gz; do gunzip -f -d $i; done
 
 export TZ='Australia/Sydney'
 
-cp $DIR/calculate_noddi.m .
+cp $BASE/scripts/processing/calculate_noddi.m .
 
 matlab -nosplash -nodesktop -r "calculate_noddi" < /dev/null
 

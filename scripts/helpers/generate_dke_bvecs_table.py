@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 import sys
 with open(sys.argv[1],'r') as fh:
 	bvecs = [line.rstrip('\n ').split('  ') for line in fh]

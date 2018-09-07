@@ -2,7 +2,7 @@
 
 SUBJECT_DIR="$(pwd)"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-BASE="$(readlink -f $DIR/../..)"
+BASE="$DTIPIPE"
 
 B0_MASK="$SUBJECT_DIR/workdir/coregistration/b0_mean_brain_mask"
 
@@ -41,6 +41,5 @@ bash $RUN_DKE $MATLAB_RUNTIME
 
 echo 'running dke ...'
 dke $DKE_PARAM
-
 
 cd $SUBJECT_DIR

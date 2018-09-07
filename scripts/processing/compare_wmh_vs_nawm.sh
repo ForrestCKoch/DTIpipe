@@ -1,7 +1,8 @@
 #!/bin/bash
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-BASE="$(readlink -f $SCRIPT_DIR/../..)"
+# BASE="$(readlink -f $SCRIPT_DIR/../..)"
+BASE="$DTIPIPE"
 
 SUBJECT_DIR="$(pwd)"
 

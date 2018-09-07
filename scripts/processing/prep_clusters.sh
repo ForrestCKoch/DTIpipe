@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-BASE="$(readlink -f $SCRIPT_DIR/../..)"
+BASE="$DTIPIPE"
 
 SUBJECT_DIR="$(pwd)"
 
@@ -64,5 +64,7 @@ for i = 1:len\
 end
 "</dev/null
 #	fprintf(fp,'Vol,SA,SP,BR,EC\\n');\
+
+module unload matlab/R2018a
 
 cd $SUBJECT_DIR

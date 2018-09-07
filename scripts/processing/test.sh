@@ -8,3 +8,5 @@ sphericity = ((pi^(1/3))*(6*stats.Volume)^(2/3))/stats.SurfaceArea;\
 fprintf(fp,'%f,%f,%f',stats.Volume,stats.SurfaceArea,sphericity);\
 fp.close();\
 "</dev/null
+
+module unload matlab/R2018a

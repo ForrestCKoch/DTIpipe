@@ -1,7 +1,7 @@
 #!/bin/bash
-
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-BASE="$(readlink -f $SCRIPT_DIR/../..)"
+# BASE="$(readlink -f $SCRIPT_DIR/../..)"
+BASE="$DTIPIPE"
 
 SUBJECT_DIR="$(pwd)"
 
@@ -49,8 +49,7 @@ for map in $(ls $SUBJECT_DIR/workdir/noddi_calculation/noddi_*.nii*); do
 	map_name=$(echo $map|rev|cut -d'/' -f1|rev|cut -d'.' -f1)
 	echo $map_name
 	echo -n "$map_name" >> shell_comparison_results.csv
-	for mask in $(ls wmh_shells/*); do
-		mask_name=$(echo $mask|cut -d'/' -f2|cut -d'.' -f1)	
+	for mask in $(ls wmh_shells/*); do mask_name=$(echo $mask|cut -d'/' -f2|cut -d'.' -f1)	
 		MEAN=$(fslstats $map -k $mask -M)
 		SDEV=$(fslstats $map -k $mask -S)
 		echo -n ",$MEAN,$SDEV" >> shell_comparison_results.csv

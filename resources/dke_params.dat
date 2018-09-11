@@ -51,7 +51,7 @@ dki_method.noise_tolerance = 0.09;          		% threshold for outlier detection 
  
 % DTI fitting method and parameters
 
-dti_method.dti_flag = 1;                    		% whether (1) or not (0) to estimate DTI parametric maps based on the DTI (in addition to DKI) signal model (default: 0)
+dti_method.dti_flag = 0;                    		% whether (1) or not (0) to estimate DTI parametric maps based on the DTI (in addition to DKI) signal model (default: 0)
 dti_method.dti_only = 0;                    		% whether (1) or not (0) to only estimate DTI parametric maps (no DKI map estimation) (default: 0)
 dti_method.no_tensor = 0;                   		% whether (1) or not (0) to estimate parametric maps using directional signal fits instead of the default diffusion tensor fit (default: 0); directional fits only allow estimation of mean diffusivity; not recommended unless the number of acquired gradient directions is less than 6
 dti_method.linear_weighting = 1;            		% unweighted (0) or weighted (1) linear least-squares (default: 1); weighting is based on the diffusion signal magnitude

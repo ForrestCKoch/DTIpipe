@@ -12,14 +12,12 @@ MASK="$(pwd)/workdir/coregistration/b0_mean_brain_mask"
 cd workdir
 mkdir -p response_maps
 cd response_maps
-mkdir -p fsl_dti_maps
 mkdir -p fsl_kurt_maps
 
 # fit the kurtosis model
 echo "Using 0, 700, 1000, 2800 b-vals"
 dtifit --kurt -k $DTI -r $BVECS -b $BVALS -o fsl_kurt_maps/kurt -m $MASK
-# create the AD and RD metrics
-cp fsl_dti_maps/dti_L1 fsl_dti_maps/dti_AD
+# create the RD metric
 fslmaths fsl_kurt_maps/dti_L1 -add fsl_kurt_maps/kurt_L2 -div 2 \
 	fsl_kurt_maps/kurt_RD
 

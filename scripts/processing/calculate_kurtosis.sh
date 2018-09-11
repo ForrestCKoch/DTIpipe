@@ -35,9 +35,7 @@ gunzip -f dti_brain.nii.gz
 mv dti_brain.nii dke/
 
 # setup DKE
-RUN_DKE="/home/forrest/local/builds/DKE/run_dke.sh"
-MATLAB_RUNTIME="/data_pub/forrest/MATLAB/MATLAB_Compiler_Runtime/v717/"
-bash $RUN_DKE $MATLAB_RUNTIME
+run_dke.sh $MCRROT
 
 echo 'running dke ...'
 dke $DKE_PARAM

@@ -28,5 +28,5 @@ $DTIPIPE/scripts/processing/compare_wmh_shells.sh > logs/comp_shells.log 2>&1
 echo "Measuring Clusters"
 $DTIPIPE/scripts/processing/measure_clusters.sh > logs/measure_clusters.log 2>&1
 echo "Measuring Cluster shells"
-$DTIPIPE/scripts/processing/measure_clusters.sh > logs/measure_clusters.log 2>&1
+$DTIPIPE/scripts/processing/measure_cluster_shells.sh > logs/measure_clusters.log 2>&1
 cd $STARTDIR

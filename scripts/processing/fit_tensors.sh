@@ -24,6 +24,7 @@ fslmaths fsl_kurt_maps/dti_L1 -add fsl_kurt_maps/kurt_L2 -div 2 \
 	fsl_kurt_maps/kurt_RD
 
 # fit the dti model using only shells < 2000
+# can include a list (eg 700, 700_1000, 700_1000_28000...)
 for i in 700_1000; do
 	mkdir -p fsl_$i
 	echo "Using 0, $(echo $i|tr '_' ',') b-vals"

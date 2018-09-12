@@ -26,7 +26,7 @@ cp ../wmh_mask_dwi_space.nii.gz wmh_mask.nii.gz
 echo "creating dilation masks"
 # create some dilation masks
 prev="wmh_mask"
-for i in $(seq 2 6); do
+for i in $(seq 2 12); do
 	echo "    ${i}mm..."
 	mname="dilated_${i}mm_gauss_wmh_mask"
 	# create the 'full' mask first

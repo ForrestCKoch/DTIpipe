@@ -24,7 +24,7 @@ for i in $(seq 1 $CNUM); do
 	echo "    Creating dilation masks"
 	cluster="$CLUSTDIR/cluster_$i"
 	prev_mask="$CLUSTDIR/cluster_$i"
-	for j in $(seq 2 6); do
+	for j in $(seq 2 12); do
 		echo "        ${j}mm..."
 		# the name of the next mask to be created
 		mname="cluster_${i}/cluster_${i}_shelled_dilated_${j}mm_gauss_mask"

@@ -10,14 +10,16 @@ show_help(){
 
     Optional arguments:
     -d|--distortion-correction     
-    -c|--coregistration          
+    -r|--coregistration          
     -N|--fit-noddi              
     -K|--fit-dki
     -D|--fit-dti
     -w|--prep-wmh
+    -m|--prep-wmh-shells
     -c|--prep-clusters
     -s|--prep-shells
     -W|--measure-wmh
+    -M|--measure-wmh-shells
     -C|--measure-clusters
     -S|--measure-shells
     -a|--all                            (default)
@@ -79,7 +81,7 @@ case $key in
         DISTORTION_CORRECTION=$TRUE
         shift # past argument
     ;;
-    -c|--coregistration)
+    -r|--coregistration)
         ALL=$FALSE
         COREGISTRATION=$TRUE
         shift # past argument
@@ -104,6 +106,11 @@ case $key in
         PREP_WMH=$TRUE
         shift # past argument
     ;;
+    -m|--prep-wmh-shells)
+        ALL=$FALSE
+        PREP_WMH_SHELLS=$TRUE
+        shift # past argument
+    ;;
     -c|--prep-clusters)
         ALL=$FALSE
         PREP_CLUSTERS=$TRUE
@@ -117,6 +124,11 @@ case $key in
     -W|--measure-wmh)
         ALL=$FALSE
         MEASURE_WMH=$TRUE
+        shift # past argument
+    ;;
+    -M|--measure-wmh-shells)
+        ALL=$FALSE
+        MEASURE_WMH_SHELLS=$TRUE
         shift # past argument
     ;;
     -C|--measure-clusters)
@@ -310,6 +322,7 @@ if [ $PREP_CLUSTER_SHELLS ]; then
     if [ $SGE_SUBMIT ]; then
         slots=1
         holds="prep_clusters_${SUBJECT_DIR}"
+        holds=",$holds,prep_wmh_shells_${SUBJECT_DIR}"
         eval $qsub_command 
     else
         $process/${script_name}.sh>\
